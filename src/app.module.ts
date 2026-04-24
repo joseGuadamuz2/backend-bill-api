@@ -3,6 +3,7 @@ import{ ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -10,7 +11,7 @@ import { UserModule } from './user/user.module';
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [ConfigModule,], // Importamos ProductModule para usar su servicio en la configuración
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get<string>('DB_HOST'),
@@ -25,6 +26,7 @@ import { UserModule } from './user/user.module';
     }),
     AuthModule,
     UserModule,
+    ProductModule,
   ],
 
 })
